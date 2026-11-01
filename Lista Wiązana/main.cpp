@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept> // Wymagany do runtime_error
 
 using namespace std;
 
@@ -14,7 +15,7 @@ class ListaJednokierunkowa {
 
             // Konstrukcja cell
             cell(element v, cell* n = nullptr) : val(v), next(n) {}
-            },
+            };
     protected:
         cell * header; // głowa listy
     public:
@@ -27,15 +28,56 @@ class ListaJednokierunkowa {
             }
         };  // Destruktor zwalnia pamięć
 
+        // wstawia element x na pozycję next komórki o wskaźniku p (lub w przypadku pustej listy tworzy komórkę z elementem x w miejscu głowy listy)
         void Insert(element x, cell * p) {
             if(header == nullptr ||p == nullptr) {
-                cell* new_cell = new cell(x, header); // Zmiana wskazywania nowa komórka wsazuje na to co wskazywał header
+                // Wstawienie na poczatek listy, gdy 1) jest pusta LUB 2) ma elementy ale chcemy na poczatek
+                cell* new_cell = new cell(x, header); // Zmiana wskazywania nowa komórka wskazuje na to co wskazywał header
+                header = new_cell; // Header wsazuje na nową komórke
+            } else {
+                // Wsawienie elementu na pozycje komórki p
+                cell* new_cell = new cell(x, p->next); // Zmiana nowa komórka ma pokazywać na to co pokazywała komórka p
+                p->next = new_cell; // Komórka p wsazuej na nową komórke tak jakby tą co była w jej miejscu
+            }
+        };
 
-            } // Wstawienie na poczatek listy, gdy 1) jest pusta, 2) ma elementy ale chcemy na poczatek
-        }; // wstawia element x na pozycję next komórki o wskaźniku p
-                                                         // (lub w przypadku pustej listy tworzy komórkę z elementem x w miejscu głowy listy)
-        bool Delete(cell * p); // usuwa komórkę z pozycji next komórki o wskaźniku p i zwraca true; zwraca false, gdy usunięcie nie jest możliwe
-        element Retrieve(cell * p); // zwraca element komórki o wskaźniku p
+        // usuwa komórkę z pozycji next komórki o wskaźniku p i zwraca true; zwraca false, gdy usunięcie nie jest możliwe
+        bool Delete(cell * p) {
+            // Gdy header jest puste
+            if(header == nullptr) { return false; } // Poniewaz nie moze nic usunąć (pusta lista)
+
+            // Usunięcie elementu jeśli p jest nullptr
+            if(p == nullptr) {
+                cell* to_delete = header; // Usuwanie tej komórki na którą wskazuje header
+                header = to_delete->next; // Zmiana tego naco header wskazuje
+                delete to_delete;
+                return true;
+            }
+
+            // Usunięcie elementu za p, który jest nullptr
+            if(p->next==nullptr) {
+                return false;
+            }
+
+            // Reszta przypadków
+            cell* to_delete = p->next; // Wskazanie komórki do usunięcia
+            p->next = to_delete->next; // Zmiana wsazywanai na to co wskazywała usunięta komórka
+            delete to_delete;
+            return true;
+        };
+
+        // zwraca element komórki o wskaźniku p
+        element Retrieve(cell * p) {
+            // Jeśli wartość nullptr
+            if(p==nullptr) {
+                throw runtime_error("Error - Proba pobrania wartosci nullptr"); // Wyrzucenie błedu
+            }
+
+           // Reszta przypadków
+           return p->val; // Zwrócenie wartości
+        };
+
+        ###
         cell * Locate(element x); // zwraca wskaźnik do pierwszej komórki z elementem x
         cell * First(); // zwraca wskaźnik do pierwszej komórki na liście
         cell * Next(cell * p); // zwraca wskaźnik do kolejnej komórki po komórce o wskaźniku p
