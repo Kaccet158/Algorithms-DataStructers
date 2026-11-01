@@ -2,25 +2,37 @@
 
 using namespace std;
 
-template <typename T> // Dzialanie listy dla odowlnego rodzaju danych
+template <typename T> // Działanie listy dla dowolnego rodzaju danych
 class ListaJednokierunkowa {
     public:
         using element = T;
 
-        // Wezel listy komorka
-        sruct cell {
+        // Węzeł listy komórka
+        struct cell {
             element val; // Wartosc w jednej komorce
             cell* next// Adres do nastepnej komorki
 
-            // Konstruktor cell
+            // Konstrukcja cell
             cell(element v, cell* n = nullptr) : val(v), next(n) {}
-        }
+            },
     protected:
         cell * header; // głowa listy
     public:
-        Lista();    //konstruktor
-        ~Lista();  //destruktor
-        void Insert(element x, cell * p); // wstawia element x na pozycję next komórki o wskaźniku p
+        ListaJednokierunkowa() : header(nullptr);    // Konstruktor pustej listy
+        ~ListaJednokierunkowa() {
+            while(header!=nullptr) {
+                cell* temp = header; // Wsazuje zawsze na pierwszą komórkę (tą po head)
+                header = header -> next; // Przeskakuje na nastepną (next)
+                delete temp; // Usuwa węzeł
+            }
+        };  // Destruktor zwalnia pamięć
+
+        void Insert(element x, cell * p) {
+            if(header == nullptr ||p == nullptr) {
+                cell* new_cell = new cell(x, header); // Zmiana wskazywania nowa komórka wsazuje na to co wskazywał header
+
+            } // Wstawienie na poczatek listy, gdy 1) jest pusta, 2) ma elementy ale chcemy na poczatek
+        }; // wstawia element x na pozycję next komórki o wskaźniku p
                                                          // (lub w przypadku pustej listy tworzy komórkę z elementem x w miejscu głowy listy)
         bool Delete(cell * p); // usuwa komórkę z pozycji next komórki o wskaźniku p i zwraca true; zwraca false, gdy usunięcie nie jest możliwe
         element Retrieve(cell * p); // zwraca element komórki o wskaźniku p
