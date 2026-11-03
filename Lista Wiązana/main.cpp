@@ -1,8 +1,6 @@
 #include <iostream>
 #include <stdexcept> // Wymagany do runtime_error
 
-using namespace std;
-
 template <typename T> // Działanie listy dla dowolnego rodzaju danych
 class ListaJednokierunkowa {
     public:
@@ -125,7 +123,16 @@ class ListaJednokierunkowa {
             return current;
         };
 
-        void print(); // wyświetla wszystkie elementy listy
+        // wyświetla wszystkie elementy listy
+        void print() {
+            cell* current = header;
+            if(header==nullptr) { std::cout<< nullptr; }
+            while(current->next!=nullptr) {
+                current = current->next;
+                std::cout<<" "<<current->val<<endl;
+            }
+
+        };
 };
 
 int main() {
