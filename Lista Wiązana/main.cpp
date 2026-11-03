@@ -88,7 +88,12 @@ class ListaJednokierunkowa {
             return nullptr; // Jeśli nie znajdzie takiej wartości
         };
 
-        cell * First(); // zwraca wskaźnik do pierwszej komórki na liście
+        // Zwraca wskaźnik do pierwszej komórki na liście
+        cell * First() {
+            return header; // Zwraca wsażnik na głowe - pustą komórke
+            // return header-> next; // Tutaj już na tą z wartościami
+        };
+
         cell * Next(cell * p); // zwraca wskaźnik do kolejnej komórki po komórce o wskaźniku p
         cell * Previous(cell * p); // zwraca wskaźnik do komórki poprzedzającej komórkę o wskaźniku p
         cell * Last(); // zwraca wskaźnik do ostatniej komórki na liście
