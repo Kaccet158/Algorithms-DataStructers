@@ -115,7 +115,15 @@ class ListaJednokierunkowa {
             return current;
         };
 
-        cell * Last(); // zwraca wskaźnik do ostatniej komórki na liście
+        // Zwraca wskaźnik do ostatniej komórki na liście
+        cell * Last() {
+            cell* current = header;
+            if(header==nullptr) { return nullptr; }
+            while(current->next!=nullptr) {
+                current = current->next;
+            }
+            return current;
+        };
 
         void print(); // wyświetla wszystkie elementy listy
 };
