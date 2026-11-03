@@ -102,9 +102,19 @@ class ListaJednokierunkowa {
             return nullptr;
             /* cell* current = p;
                 return current->next; */
-        }; 
-        
-        cell * Previous(cell * p); // zwraca wskaźnik do komórki poprzedzającej komórkę o wskaźniku p
+        };
+
+        // Zwraca wskaźnik do komórki poprzedzającej komórkę o wskaźniku p
+        cell * Previous(cell * p) {
+            cell* current = header;
+            if(p==nullptr || p==header) { return nullptr; } // Bo brak
+            // Sprawdza od głowy do ostatniego przed p, jeśli current == p to pętla się kończy i to oznacza, że ten current jest wskaźnikiem poprzedzającym p
+            while(current!=nullptr && current->t!=p) {
+                current = current->next; // Przejście
+            }
+            return current;
+        };
+
         cell * Last(); // zwraca wskaźnik do ostatniej komórki na liście
 
         void print(); // wyświetla wszystkie elementy listy
