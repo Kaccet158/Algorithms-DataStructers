@@ -94,7 +94,16 @@ class ListaJednokierunkowa {
             // return header-> next; // Tutaj już na tą z wartościami
         };
 
-        cell * Next(cell * p); // zwraca wskaźnik do kolejnej komórki po komórce o wskaźniku p
+        // Zwraca wskaźnik do kolejnej komórki po komórce o wskaźniku p
+        cell * Next(cell * p) {
+            if(p!=nullptr) {
+                return p->next;
+            }
+            return nullptr;
+            /* cell* current = p;
+                return current->next; */
+        }; 
+        
         cell * Previous(cell * p); // zwraca wskaźnik do komórki poprzedzającej komórkę o wskaźniku p
         cell * Last(); // zwraca wskaźnik do ostatniej komórki na liście
 
