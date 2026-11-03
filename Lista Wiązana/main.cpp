@@ -77,8 +77,17 @@ class ListaJednokierunkowa {
            return p->val; // Zwrócenie wartości
         };
 
-        ###
-        cell * Locate(element x); // zwraca wskaźnik do pierwszej komórki z elementem x
+        // Zwraca wskaźnik do pierwszej komórki z elementem x
+        cell * Locate(element x) {
+            cell* current = header; // Zaczyna od samego początku
+            while(current!=nullptr) {
+                if(current->val == x) // Sprawdza czy to ta wartość
+                    return current;
+                current = current->next;
+            }
+            return nullptr; // Jeśli nie znajdzie takiej wartości
+        };
+
         cell * First(); // zwraca wskaźnik do pierwszej komórki na liście
         cell * Next(cell * p); // zwraca wskaźnik do kolejnej komórki po komórce o wskaźniku p
         cell * Previous(cell * p); // zwraca wskaźnik do komórki poprzedzającej komórkę o wskaźniku p
